@@ -1,0 +1,576 @@
+.medication-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.medication-modal__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    backdrop-filter: blur(2px);
+}
+
+.medication-modal__content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 12px;
+    padding: 32px;
+    width: 90%;
+    max-width: 550px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-shadow: 0 8px 32px rgba(0, 102, 204, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e8f0ff;
+    animation: slideUp 0.3s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.medication-modal__title {
+    margin: 0 0 24px 0;
+    color: #0066cc;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+.medication-modal__error {
+    padding: 12px 14px;
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.medication-modal__warning {
+    margin-top: 8px;
+    color: #b91c1c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.medication-modal__form-group {
+    margin-bottom: 18px;
+
+    &--flex {
+        margin-bottom: 0;
+    }
+}
+
+.medication-modal__label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.medication-modal__label--sub {
+    margin-top: 12px;
+}
+
+.medication-modal__input,
+.medication-modal__select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid #e0e7ff;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: #0066cc;
+        background-color: #f8fbff;
+        box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
+    }
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+}
+
+.medication-modal__input--dosage {
+    text-align: center;
+}
+
+.medication-modal__textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid #e0e7ff;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #1f2937;
+    resize: vertical;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: #0066cc;
+        background-color: #f8fbff;
+        box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
+    }
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+}
+
+.medication-modal__select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    padding-right: 36px;
+}
+
+// Duration mode select
+.medication-modal__select--duration-mode {
+    margin-bottom: 12px;
+}
+
+// Day Selector
+.medication-modal__day-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.medication-modal__day-btn {
+    padding: 12px 8px;
+    border: 2px solid #e0e7ff;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: #0066cc;
+        color: #0066cc;
+        background-color: #f0f5ff;
+    }
+
+    &--selected {
+        background: linear-gradient(135deg, #00a854 0%, #008c42 100%);
+        border-color: #00a854;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0, 168, 84, 0.2);
+    }
+}
+
+// Dosage Row
+.medication-modal__dosage-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.medication-modal__form-group--flex {
+    margin-bottom: 0;
+}
+
+.medication-modal__buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.medication-modal__button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.medication-modal__button--add {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+
+    &:hover {
+        box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3);
+    }
+}
+
+.medication-modal__button--cancel {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+
+    &:hover {
+        background-color: #e5e7eb;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+}
+
+// Patient Search
+.medication-modal__patient-search {
+    position: relative;
+}
+
+.medication-modal__patient-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 2px solid #0066cc;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+}
+
+.medication-modal__patient-option {
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #e5e7eb;
+
+    &:hover {
+        background-color: #f0f5ff;
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &--empty {
+        cursor: default;
+        color: #6b7280;
+        text-align: center;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.medication-modal__patient-name {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.medication-modal__patient-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.medication-modal__patient-id {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0066cc;
+    background-color: #e8f0ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.medication-modal__patient-age {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+// Start Date picker
+.medication-modal__date-wrapper {
+    position: relative;
+}
+
+.medication-modal__weekday-end {
+    position: relative;
+    margin-top: 10px;
+}
+
+.medication-modal__date-btn {
+    width: 100%;
+    padding: 11px 36px 11px 14px;
+    border: 2px solid #e0e7ff;
+    border-radius: 6px;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    color: #9ca3af;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &:hover,
+    &:focus {
+        outline: none;
+        border-color: #0066cc;
+        background-color: #f8fbff;
+        box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
+    }
+
+    &--has-value {
+        color: #1f2937;
+        border-color: #0066cc;
+    }
+}
+
+// Inline calendar container (Custom Dates mode)
+.medication-modal__custom-cal-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+// Mini calendar dropdown
+.mini-cal {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 232px;
+    background: #ffffff;
+    border: 2px solid #0066cc;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.15);
+    z-index: 20;
+    animation: slideUp 0.2s ease-out;
+}
+
+.mini-cal--inline {
+    position: static;
+    width: 232px;
+    box-shadow: 0 2px 12px rgba(0, 102, 204, 0.12);
+}
+
+.mini-cal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.mini-cal__month-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0066cc;
+}
+
+.mini-cal__nav {
+    background: none;
+    border: none;
+    color: #0066cc;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: #e8f0ff;
+    }
+}
+
+.mini-cal__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 2px;
+}
+
+.mini-cal__weekday {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 600;
+    color: #9ca3af;
+    padding: 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.mini-cal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+.mini-cal__empty {
+    height: 27px;
+}
+
+.mini-cal__day {
+    height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    font-family: inherit;
+    font-size: 11px;
+    color: #1f2937;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+        background-color: #e8f0ff;
+        color: #0066cc;
+    }
+
+    &--today {
+        font-weight: 700;
+        color: #0066cc;
+        border: 1.5px solid #0066cc;
+    }
+
+    &--selected {
+        background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0, 102, 204, 0.3);
+
+        &:hover {
+            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+            color: white;
+        }
+    }
+}
+
+// Duration range preview
+.medication-modal__duration-preview {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #f0f5ff 0%, #e8f0ff 100%);
+    border: 1.5px solid #c7d9f7;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #0052a3;
+    font-weight: 500;
+}
+
+.medication-modal__duration-preview-label {
+    font-weight: 700;
+    margin-right: 6px;
+    color: #0066cc;
+}
+
+// Custom date chips
+.medication-modal__custom-date-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.medication-modal__custom-date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px 3px 10px;
+    background-color: #e8f0ff;
+    border: 1.5px solid #c7d9f7;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #0052a3;
+}
+
+.medication-modal__chip-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #0066cc;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: #c7d9f7;
+    }
+}
+
+// Scrollbar styling
+.medication-modal__content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.medication-modal__content::-webkit-scrollbar-track {
+    background: #f0f5ff;
+    border-radius: 10px;
+}
+
+.medication-modal__content::-webkit-scrollbar-thumb {
+    background: #0066cc;
+    border-radius: 10px;
+
+    &:hover {
+        background: #0052a3;
+    }
+}

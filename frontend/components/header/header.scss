@@ -1,0 +1,96 @@
+.header {
+    background: linear-gradient(135deg, #0052a3 0%, #0066cc 100%);
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.header__title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.header__clock {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+}
+
+.header__clock-time {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.header__clock-date {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+}
+
+.header__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.header__button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.header__button--primary {
+    background-color: #00a854;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 168, 84, 0.2);
+
+    &:hover {
+        background-color: #008c42;
+    }
+}
+
+.header__button--secondary {
+    background-color: #00d4ff;
+    color: #0052a3;
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
+
+    &:hover {
+        background-color: #00bfd9;
+    }
+}
+

@@ -1,0 +1,19 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #e8f0ff;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+}
+
+.footer__text {
+    margin: 0;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 500;
+}

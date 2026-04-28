@@ -1,0 +1,162 @@
+.patient-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.patient-modal__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    backdrop-filter: blur(2px);
+}
+
+.patient-modal__content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 12px;
+    padding: 32px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px rgba(0, 102, 204, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e8f0ff;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.patient-modal__title {
+    margin: 0 0 24px 0;
+    color: #0066cc;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+.patient-modal__error {
+    padding: 12px 14px;
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.patient-modal__form-group {
+    margin-bottom: 18px;
+}
+
+.patient-modal__label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.patient-modal__input,
+.patient-modal__textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid #e0e7ff;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: #0066cc;
+        background-color: #f8fbff;
+        box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
+    }
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+}
+
+.patient-modal__textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.patient-modal__buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.patient-modal__button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.patient-modal__button--add {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+
+    &:hover {
+        box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3);
+    }
+}
+
+.patient-modal__button--cancel {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+
+    &:hover {
+        background-color: #e5e7eb;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+}
