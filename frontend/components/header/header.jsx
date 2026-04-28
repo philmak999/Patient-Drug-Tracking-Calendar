@@ -32,14 +32,18 @@ export default function Header() {
                     <button 
                         className="header__button header__button--primary"
                         onClick={() => setPatientModalOpen(true)}
+                        aria-label="Add Patient"
                     >
-                        + Add Patient
+                        <span className="header__button-icon" aria-hidden="true">👤</span>
+                        <span className="header__button-text">+ Add Patient</span>
                     </button>
                     <button 
                         className="header__button header__button--secondary"
                         onClick={() => setMedicationModalOpen(true)}
+                        aria-label="Add Medication"
                     >
-                        + Add Medication
+                        <span className="header__button-icon" aria-hidden="true">💊</span>
+                        <span className="header__button-text">+ Add Medication</span>
                     </button>
                 </div>
             </header>

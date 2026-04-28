@@ -206,7 +206,7 @@ export default function Calendar() {
                 >
                     <div className="calendar__day-header">
                         <span className="calendar__day-number">{day}</span>
-                        {isToday && <span className="calendar__today-badge">Today</span>}
+                        {isToday && <span className="calendar__today-badge" aria-label="Today" title="Today" />}
                     </div>
                     {previewText && (
                         <div className="calendar__day-preview">{previewText}</div>
@@ -227,8 +227,19 @@ export default function Calendar() {
                 <div className={`calendar__month-body${isCollapsed ? ' calendar__month-body--collapsed' : ''}`}>
                     <div className="calendar__month-body-inner">
                         <div className="calendar__weekdays">
-                            {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(d => (
-                                <div key={d} className="calendar__weekday">{d}</div>
+                            {[
+                                { full: 'Sunday', short: 'Sun' },
+                                { full: 'Monday', short: 'Mon' },
+                                { full: 'Tuesday', short: 'Tue' },
+                                { full: 'Wednesday', short: 'Wed' },
+                                { full: 'Thursday', short: 'Thu' },
+                                { full: 'Friday', short: 'Fri' },
+                                { full: 'Saturday', short: 'Sat' },
+                            ].map(d => (
+                                <div key={d.full} className="calendar__weekday">
+                                    <span className="calendar__weekday-full">{d.full}</span>
+                                    <span className="calendar__weekday-short">{d.short}</span>
+                                </div>
                             ))}
                         </div>
                         <div className="calendar__grid">{days}</div>

@@ -20,8 +20,8 @@ function formatDateShort(iso) {
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-export default function AddMedicationModal({ isOpen, onClose, prefillStartDate = '' }) {
-    const { patients, doctors, addMedication, loading, fetchPatients, fetchDoctors } = useContext(PatientContext);
+export default function AddMedicationModal({ isOpen, onClose, prefillStartDate = '', medicationToEdit = null }) {
+    const { patients, doctors, addMedication, updateMedication, loading, fetchPatients, fetchDoctors } = useContext(PatientContext);
     const [formData, setFormData] = useState({
         patientId: '',
         medication: '',
@@ -56,11 +56,34 @@ export default function AddMedicationModal({ isOpen, onClose, prefillStartDate =
     useEffect(() => {
         if (!isOpen) return;
 
+        if (medicationToEdit) {
+            setFormData({
+                patientId: medicationToEdit.patientId || '',
+                medication: medicationToEdit.medication || '',
+                doctorName: medicationToEdit.doctorName || '',
+                startDate: medicationToEdit.startDate || '',
+                durationMode: medicationToEdit.durationMode || 'days',
+                duration: medicationToEdit.duration ?? '',
+                manualDays: medicationToEdit.manualDays || [],
+                dosage: medicationToEdit.dosage ?? '',
+                dosageUnit: medicationToEdit.dosageUnit || 'mg',
+                prescriptionInstructions: medicationToEdit.prescriptionInstructions || '',
+            });
+            setSelectedDays(medicationToEdit.manualDays || []);
+            setCustomDates(medicationToEdit.customDates || []);
+            setPatientSearch(
+                medicationToEdit.patientDisplayId
+                    ? `${medicationToEdit.patientName} (${medicationToEdit.patientDisplayId})`
+                    : medicationToEdit.patientName || ''
+            );
+            return;
+        }
+
         setFormData(prev => ({
             ...prev,
             startDate: prefillStartDate || '',
         }));
-    }, [isOpen, prefillStartDate]);
+    }, [isOpen, prefillStartDate, medicationToEdit]);
 
     useEffect(() => {
         if (!showCalendar) return;
@@ -144,15 +167,21 @@ export default function AddMedicationModal({ isOpen, onClose, prefillStartDate =
         if (!formData.dosage || formData.dosage < 0) { setError('Please enter a valid dosage'); return; }
 
         try {
-            await addMedication({
+            const payload = {
                 ...formData,
                 manualDays: formData.durationMode === 'weekdays' ? selectedDays : undefined,
                 customDates: formData.durationMode === 'custom' ? customDates : undefined,
-            });
+            };
+
+            if (medicationToEdit?.medicationId || medicationToEdit?.id) {
+                await updateMedication(medicationToEdit.medicationId || medicationToEdit.id, payload);
+            } else {
+                await addMedication(payload);
+            }
             resetForm();
             onClose();
         } catch (err) {
-            setError(err.message || 'Failed to add medication');
+            setError(err.message || 'Failed to save medication');
         }
     };
 
@@ -218,6 +247,7 @@ export default function AddMedicationModal({ isOpen, onClose, prefillStartDate =
     };
 
     if (!isOpen) return null;
+    const isEditMode = !!(medicationToEdit?.medicationId || medicationToEdit?.id);
 
     const durationPreview = getDurationPreview();
     const startDateDisplay = formData.startDate
@@ -234,7 +264,7 @@ export default function AddMedicationModal({ isOpen, onClose, prefillStartDate =
         <div className="medication-modal">
             <div className="medication-modal__overlay" onClick={handleCancel}></div>
             <div className="medication-modal__content">
-                <h2 className="medication-modal__title">Add New Medication</h2>
+                <h2 className="medication-modal__title">{isEditMode ? 'Edit Medication Plan' : 'Add New Medication'}</h2>
 
                 {error && <div className="medication-modal__error">{error}</div>}
 
@@ -472,7 +502,7 @@ export default function AddMedicationModal({ isOpen, onClose, prefillStartDate =
                         onClick={handleAddMedication}
                         disabled={loading}
                     >
-                        {loading ? 'Adding...' : 'Add Medication'}
+                        {loading ? (isEditMode ? 'Saving...' : 'Adding...') : (isEditMode ? 'Save Medication Plan' : 'Add Medication')}
                     </button>
                     <button
                         className="medication-modal__button medication-modal__button--cancel"

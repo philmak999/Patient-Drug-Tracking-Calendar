@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1001;
+    z-index: 2100;
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
@@ -158,5 +158,68 @@
     &:hover {
         background-color: #e5e7eb;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+}
+
+@media (max-width: 768px) {
+    .patient-modal__content {
+        width: 94%;
+        padding: 18px;
+    }
+
+    .patient-modal__title {
+        font-size: 19px;
+        margin-bottom: 14px;
+    }
+
+    .patient-modal__form-group {
+        margin-bottom: 14px;
+    }
+
+    .patient-modal__buttons {
+        flex-wrap: wrap;
+    }
+
+    .patient-modal__button {
+        min-width: calc(50% - 6px);
+    }
+}
+
+@media (max-width: 425px) {
+    .patient-modal__content {
+        width: 96%;
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .patient-modal__title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .patient-modal__label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .patient-modal__input,
+    .patient-modal__textarea {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+
+    .patient-modal__form-group {
+        margin-bottom: 10px;
+    }
+
+    .patient-modal__buttons {
+        margin-top: 12px;
+        gap: 8px;
+    }
+
+    .patient-modal__button {
+        min-width: 100%;
+        padding: 9px 10px;
+        font-size: 11px;
     }
 }

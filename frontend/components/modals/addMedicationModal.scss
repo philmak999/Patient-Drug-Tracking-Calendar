@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1001;
+    z-index: 2100;
 }
 
 .medication-modal__overlay {
@@ -572,5 +572,87 @@
 
     &:hover {
         background: #0052a3;
+    }
+}
+
+@media (max-width: 768px) {
+    .medication-modal__content {
+        width: 94%;
+        padding: 18px;
+        max-height: 88vh;
+    }
+
+    .medication-modal__title {
+        font-size: 19px;
+        margin-bottom: 14px;
+    }
+
+    .medication-modal__form-group {
+        margin-bottom: 14px;
+    }
+
+    .medication-modal__dosage-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .medication-modal__buttons {
+        flex-wrap: wrap;
+    }
+
+    .medication-modal__button {
+        min-width: calc(50% - 6px);
+    }
+}
+
+@media (max-width: 425px) {
+    .medication-modal__content {
+        width: 96%;
+        padding: 12px;
+        border-radius: 10px;
+        max-height: 92vh;
+    }
+
+    .medication-modal__title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .medication-modal__label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .medication-modal__input,
+    .medication-modal__select,
+    .medication-modal__textarea,
+    .medication-modal__date-btn {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+
+    .medication-modal__form-group {
+        margin-bottom: 10px;
+    }
+
+    .medication-modal__day-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-cal,
+    .mini-cal--inline {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .medication-modal__buttons {
+        margin-top: 12px;
+        gap: 8px;
+    }
+
+    .medication-modal__button {
+        min-width: 100%;
+        padding: 9px 10px;
+        font-size: 11px;
     }
 }

@@ -17,3 +17,24 @@
     font-size: 13px;
     font-weight: 500;
 }
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 12px 14px;
+    }
+
+    .footer__text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 425px) {
+    .footer {
+        padding: 10px;
+    }
+
+    .footer__text {
+        font-size: 11px;
+        line-height: 1.35;
+    }
+}

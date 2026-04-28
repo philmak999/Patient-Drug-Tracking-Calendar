@@ -168,3 +168,54 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .day-detail-modal__content {
+        width: 94%;
+        max-width: 520px;
+        padding: 22px;
+        max-height: 88vh;
+    }
+
+    .day-detail-modal__title {
+        font-size: 20px;
+    }
+
+    .day-detail-modal__buttons {
+        flex-wrap: wrap;
+    }
+
+    .day-detail-modal__button {
+        min-width: calc(50% - 6px);
+    }
+}
+
+@media (max-width: 425px) {
+    .day-detail-modal__content {
+        width: 96%;
+        padding: 14px;
+        border-radius: 10px;
+        max-height: 92vh;
+    }
+
+    .day-detail-modal__title {
+        font-size: 17px;
+        margin-bottom: 14px;
+    }
+
+    .day-detail-modal__textarea {
+        height: 90px;
+        font-size: 13px;
+    }
+
+    .day-detail-modal__buttons {
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .day-detail-modal__button {
+        min-width: 100%;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+}

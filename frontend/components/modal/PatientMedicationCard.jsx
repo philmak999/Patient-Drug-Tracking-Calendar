@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AddMedicationModal from '../modals/AddMedicationModal';
+import EditMedicationPlanModal from '../modals/EditMedicationPlanModal';
 import './patientMedicationCard.scss';
 
 function formatDate(isoStr) {
@@ -123,7 +123,7 @@ export default function PatientMedicationCard({
                             className="pmc__action-button"
                             onClick={() => setIsEditing(true)}
                         >
-                            Edit Prescription
+                            Edit Day Prescription
                         </button>
                         <button
                             className="pmc__action-button"
@@ -134,6 +134,9 @@ export default function PatientMedicationCard({
                     </div>
 
                     <div className={`pmc__edit-form${isEditing ? ' pmc__edit-form--open' : ''}`}>
+                            <p className="pmc__edit-note">
+                                Note: Changing dosage here only updates this specific day's prescription.
+                            </p>
                             <label className="pmc__edit-label">Dosage</label>
                             <input
                                 className="pmc__edit-input"
@@ -175,7 +178,7 @@ export default function PatientMedicationCard({
                     </div>
                 </div>
 
-                <AddMedicationModal
+                <EditMedicationPlanModal
                     isOpen={isEditPlanOpen}
                     onClose={() => setIsEditPlanOpen(false)}
                     medicationToEdit={{
