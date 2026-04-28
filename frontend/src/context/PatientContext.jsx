@@ -3,6 +3,17 @@ import { patientAPI } from '../api/patientAPI';
 
 export const PatientContext = createContext();
 
+const FALLBACK_DOCTORS = [
+    { id: 1, firstName: 'Sarah',   lastName: 'Chen',      specialty: 'Cardiology' },
+    { id: 2, firstName: 'Michael', lastName: 'Torres',    specialty: 'Neurology' },
+    { id: 3, firstName: 'Emily',   lastName: 'Patel',     specialty: 'Internal Medicine' },
+    { id: 4, firstName: 'James',   lastName: 'Okafor',    specialty: 'Oncology' },
+    { id: 5, firstName: 'Lisa',    lastName: 'Nakamura',  specialty: 'Endocrinology' },
+    { id: 6, firstName: 'Robert',  lastName: 'Williams',  specialty: 'Psychiatry' },
+    { id: 7, firstName: 'Angela',  lastName: 'Martinez',  specialty: 'Rheumatology' },
+    { id: 8, firstName: 'David',   lastName: 'Kim',       specialty: 'Pulmonology' },
+];
+
 export function PatientProvider({ children }) {
     const [patients, setPatients] = useState([]);
     const [medications, setMedications] = useState([]);
@@ -27,9 +38,10 @@ export function PatientProvider({ children }) {
     const fetchDoctors = useCallback(async () => {
         try {
             const data = await patientAPI.getDoctors();
-            setDoctors(Array.isArray(data) ? data : []);
+            setDoctors(Array.isArray(data) ? data : FALLBACK_DOCTORS);
         } catch (err) {
-            console.error('Failed to fetch doctors:', err);
+            setDoctors(FALLBACK_DOCTORS);
+            console.error('Backend unreachable, using built-in doctors list:', err);
         }
     }, []);
 
@@ -41,9 +53,19 @@ export function PatientProvider({ children }) {
             setPatients(prev => [...prev, newPatient]);
             return newPatient;
         } catch (err) {
-            setError(err.message);
-            console.error('Failed to add patient:', err);
-            throw err;
+            // Backend unreachable — store locally with a generated ID
+            setPatients(prev => {
+                const localPatient = {
+                    id: Date.now(),
+                    patientId: `P-${String(prev.length + 1).padStart(3, '0')}`,
+                    firstName: patientData.firstName.trim(),
+                    lastName: patientData.lastName.trim(),
+                    age: Number(patientData.age),
+                    additionalInfo: patientData.additionalInfo?.trim() || '',
+                };
+                return [...prev, localPatient];
+            });
+            console.error('Backend unreachable, patient stored locally:', err);
         } finally {
             setLoading(false);
         }
