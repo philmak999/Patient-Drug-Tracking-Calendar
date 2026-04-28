@@ -183,33 +183,59 @@ export default function Calendar() {
             const dayMeds = medicationsByDay[dateKey] || [];
             const hasNotes = !!dayContents[dateKey];
             const hasFill = dayMeds.length > 0 || hasNotes;
+            const patientCountClass = dayMeds.length >= 4
+                ? ' calendar__day--count-critical'
+                : dayMeds.length === 3
+                    ? ' calendar__day--count-high'
+                    : dayMeds.length === 2
+                        ? ' calendar__day--count-medium'
+                        : dayMeds.length === 1
+                            ? ' calendar__day--count-low'
+                            : '';
             const isToday = dateKey === todayKey;
             const dayDate = new Date(year, month, day);
             const isPast = dayDate < todayStart;
 
-            let previewText = null;
-            if (dayMeds.length === 1) {
-                const firstName = dayMeds[0].patientName.split(' ')[0];
-                previewText = `${firstName} - ${dayMeds[0].medication}`;
-            } else if (dayMeds.length > 1) {
-                previewText = `${dayMeds.length} patients`;
+            let previewEntries = [];
+            if (dayMeds.length > 0) {
+                previewEntries = dayMeds.map((med, idx) => ({
+                    key: `med-preview-${dateKey}-${med.medicationId || idx}`,
+                    patientName: med.patientName,
+                    medicationLine: `${med.medication} ${med.dosage}${med.dosageUnit ? ` ${med.dosageUnit}` : ''}`,
+                }));
             } else if (hasNotes) {
                 const notes = dayContents[dateKey];
-                previewText = notes.length > 22 ? `${notes.substring(0, 20)}...` : notes;
+                previewEntries = [{
+                    key: `notes-preview-${dateKey}`,
+                    patientName: 'Notes',
+                    medicationLine: notes.length > 40 ? `${notes.substring(0, 38)}...` : notes,
+                }];
             }
 
             days.push(
                 <div
                     key={`day-${day}`}
-                    className={`calendar__day${hasFill ? ' calendar__day--filled' : ''}${isToday ? ' calendar__day--today' : ''}${isPast ? ' calendar__day--past' : ''}`}
+                    className={`calendar__day${hasFill ? ' calendar__day--filled' : ''}${patientCountClass}${isToday ? ' calendar__day--today' : ''}${isPast ? ' calendar__day--past' : ''}`}
                     onClick={() => openModal(day, month, year)}
                 >
                     <div className="calendar__day-header">
                         <span className="calendar__day-number">{day}</span>
                         {isToday && <span className="calendar__today-badge" aria-label="Today" title="Today" />}
+                        {dayMeds.length > 0 && (
+                            <span className="calendar__count-badge">
+                                {dayMeds.length >= 4 ? '4+' : dayMeds.length}
+                            </span>
+                        )}
                     </div>
-                    {previewText && (
-                        <div className="calendar__day-preview">{previewText}</div>
+                    {previewEntries.length > 0 && (
+                        <div className="calendar__day-preview">
+                            {previewEntries.map((entry) => (
+                                <div key={entry.key} className="calendar__day-preview-item">
+                                    <div className="calendar__day-preview-name">{entry.patientName}</div>
+                                    <div className="calendar__day-preview-med">{entry.medicationLine}</div>
+                                </div>
+                            ))}
+                        </div>
                     )}
                 </div>
             );
